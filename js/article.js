@@ -1,7 +1,13 @@
-let loginUser = null;
+
+
 $(function () {
+    if (user.account === undefined) {
+        load_user();
+    }
     content_load();
+    netty_connection()
 })
+
 
 
 function load() {
@@ -21,7 +27,7 @@ function content_load() {
     let blogId = window.location.href.split('=')[1];
     $.ajax({
         type: 'GET',
-        url: baseUrl+'/fe-blog/DetailBlogServlet',
+        url: baseUrl + '/fe-blog/DetailBlogServlet',
         data: {'blogId': blogId},
         dataType: 'json',
         success: function (res) {
@@ -59,13 +65,6 @@ function commentAdd(blogId) {
         let data = {
             'blog_id': blogId,
             'content': $('#comment').val(),
-        }
-        if(loginUser==null){
-            layer.msg("请登陆后评论", {
-                icon: 6,
-                time: 1000
-            })
-            return;
         }
         if (data.content === '' || data.content == null) {
             layer.msg("请输入评论", {
@@ -108,13 +107,14 @@ function commentAdd(blogId) {
                 })
             }
         })
+        send_message()
     })
 }
 
 function addComment(data) {
     $.ajax({
         type: 'POST',
-        url: baseUrl+ '/fe-ornament/AddCommentServlet',
+        url: baseUrl + '/fe-ornament/AddCommentServlet',
         data: JSON.stringify(data),
         dataType: 'json',
         success: function (res) {
@@ -133,19 +133,83 @@ function addComment(data) {
     })
 }
 
+/****** For netty Test ******/
+
+function netty_connection() {
+    ws.onopen = function () {
+        console.log("连接成功.")
+    }
+    ws.onmessage = function (ev) {
+        showMessage(ev.data);
+    }
+    ws.onclose = function () {
+        console.log("连接关闭")
+    }
+    ws.onerror = function () {
+        console.log("连接异常")
+    }
+}
+
+function send_message() {
+    if (user == null) {
+        layer.msg("请登录后再评论")
+        return;
+    }
+    const content = $('#comment').val();
+    let element = `<li class="comment_item" id='comment_${Math.random()}'> <span>${user.account}：</span> ${content}
+                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${Math.random()}' lay-on="test-offset-r" onclick="reply()">回复</button>`
+    $('.comment_list').append(element)
+    const message = user.account + ":" + content;
+    ws.send(message);
+}
+
+function showMessage(message) {
+    if (isValidURL(message)) {
+      let element=  `<div class="comment_item" id="${Math.random()}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span>
+                                    <img class="comment_reply_img" src="${message}" style='width: 100px;height: 100px;' lay-on="test-tips-photos-one">
+                                    <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${Math.random()}' lay-on="test-offset-r" onclick="reply()">回复</button>
+                                </div>`;
+        $('.comment_list').append(element);
+    } else {
+        const str = message.split(":");
+        const element = `<li class="comment_item" id='comment_${Math.random()}'> <span>${user.account}：</span> ${str}
+                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${Math.random()}' lay-on="test-offset-r" onclick="reply()">回复</button>`;
+        $('.comment_list').append(element);
+    }
+    var modal = document.getElementById("modal");
+
+    var modalImg = document.getElementById("modalImage");
+
+    var images = document.querySelectorAll(".comment_reply_img");
+    images.forEach(function (image) {
+        image.addEventListener("click", function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        });
+    });
+
+    var span = document.querySelector(".close");
+
+    span.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    modal.addEventListener("click", function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+}
+
+
+/******* End *****************/
 
 var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
 recognition.lang = 'zh-CN';
-recognition.continuous=false;
+recognition.continuous = false;
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
-// var app = new Vue({
-//     el: '#comment',
-//     data: {
-//         message: ''
-//     }
-// })
 recognition.onresult = function (event) {
     var yourComment = event.results[0][0].transcript
     console.log(event.results[0][0].transcript)
@@ -153,7 +217,7 @@ recognition.onresult = function (event) {
     app.message += yourComment;
     console.log("输入的内容为：" + app.message);
     //window.location.reload("#comment");
-    }
+}
 
 function commentByMicrophone() {
     console.log("开始输入")
@@ -188,7 +252,7 @@ function findAllComment(blogId) {
                 let curr = obj.curr;
                 $.ajax({
                     type: 'GET',
-                    url: baseUrl+ '/fe-ornament/SelectAllCommentServlet',
+                    url: baseUrl + '/fe-ornament/SelectAllCommentServlet',
                     data: {
                         'blog_id': blogId,
                         'page': (curr - 1) * 20,
@@ -249,18 +313,18 @@ function reply() {
     })
 }
 
-function theResultOfAudit(audited){
+function theResultOfAudit(audited) {
     let blogId = window.location.href.split('=')[1];
     $.ajax({
         type: 'POST',
-        url: baseUrl+ '/fe-blog/resultOfAudit',
+        url: baseUrl + '/fe-blog/resultOfAudit',
         data: {
-            "blog_id" : blogId,
-            "audited" : audited,
+            "blog_id": blogId,
+            "audited": audited,
         },
         dataType: 'json',
         success: function (res) {
-            if(res.code!==200){
+            if (res.code !== 200) {
                 layer.msg("res.msg");
                 return;
             }
@@ -280,10 +344,11 @@ function theResultOfAudit(audited){
 }
 
 function passTheAudit() {
-  let audited=true;
+    let audited = true;
     theResultOfAudit(audited);
 }
+
 function failTheAudit() {
-    let audited=false;
+    let audited = false;
     theResultOfAudit(audited);
 }

@@ -1,7 +1,9 @@
 var user = {};
-var token;
+let token;
+const ws = new WebSocket("ws://localhost:8081/chat");
 const baseUrl = 'http://192.168.43.68:1868'
 const MINIO_BASE_URL = "http://192.168.24.132:9000"
+
 $(function () {
     /* 引入layui */
     layui.use(['element', 'laydate', 'upload', 'form'], function () {

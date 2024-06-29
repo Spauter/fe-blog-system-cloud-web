@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="js/editor.md/css/editormd.preview.min.css">
     <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/imgCenter.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
@@ -79,6 +80,9 @@
                         <i class="layui-icon layui-icon-mike" style="font-size: 35px" onclick="commentByMicrophone()"></i>
                         <i class="layui-icon layui-icon-close" style="font-size: 35px"
                            onclick="stopinputByMicrophone()"></i>
+                        <div>
+                            <i class="layui-icon layui-icon-upload" style="font-size: 2rem" id="ID-upload-demo-size"></i>
+                        </div>
                     </div>
                     <div class="comment_btn">
                         点击发表
@@ -107,7 +111,44 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/layui/layui.js"></script>
 <script src="js/common.js"></script>
+<script src="js/getRedisUser.js"></script>
 <script src="js/article.js"></script>
+<script>
+    layui.use(function () {
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var modal = document.getElementById("modal");
+
+        var modalImg = document.getElementById("modalImage");
+
+        var images = document.querySelectorAll(".comment_reply_img");
+        // 渲染
+        upload.render({
+            elem: '#ID-upload-demo-size',
+            // 此处配置你自己的上传接口即可
+            url: `${baseUrl}` + '/fe-media/upload',
+            headers: {
+                "token": localStorage.token,
+                // "Content-Type": 'image/jpeg'
+            },
+            // 限制文件大小，单位 KB
+            size: 512,
+            accept: 'images',
+            done: function (res) {
+                if (res.code !== 200) {
+                    layer.msg("上传失败");
+                } else {
+                    layer.msg("上传成功")
+                    console.log(res.data)
+                    const imgUrl = MINIO_BASE_URL + res.data.url;
+                    ws.send(imgUrl);
+                    showMessage(imgUrl)
+                }
+            }
+
+        });
+    })
+</script>
 </body>
 
 </html>

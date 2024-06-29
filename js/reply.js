@@ -1,13 +1,14 @@
 let commentId = window.location.href.split('=')[1].split('_')[2];
-let loginUser;
-const ws = new WebSocket("ws://localhost:8081/chat");
 let clickCount = 0;
 let timeout;
 
 
 $(function () {
+    if (user.account===undefined) {
+        load_user();
+    }
     reply_content_load()
-    userInfoLoad();
+    netty_connection();
 })
 
 /** add reply **/
@@ -21,7 +22,7 @@ function auditResponse() {
         });
         return;
     }
-    if (loginUser == null) {
+    if (user.account === undefined) {
         layui.use('layer', function () {
             layer.msg("请登录后再回复", {
                 icon: 6,
@@ -111,35 +112,6 @@ function add(content) {
     })
 }
 
-function load_user() {
-    $.ajax({
-        type: 'GET',
-        url: baseUrl + '/fe-user/UserLoginController',
-        headers: {"token": localStorage.token},
-        dataType: "json",
-        success: function (res) {
-            if (res.code !== 200) {
-                layui.use('layer', function () {
-                    let layer = layui.layer;
-                    layer.msg("当前您未登录，仅查看", {
-                        icon: 1,
-                        time: 2000
-                    })
-                })
-                $('.reply_comment').empty();
-                return;
-            }
-            let data = res.data;
-            user.avatar = data.avatar;
-            user.account = data.account;
-            user.userId = data.userId;
-            user.nick = data.nick;
-        }, error: function (err) {
-            layer.msg("请求出错，即将返回首页");
-        }
-    });
-    netty_connection()
-}
 
 function reply_content_load() {
     load_user();
@@ -207,13 +179,13 @@ function reply_content_load() {
 }
 
 /** End for reply *(/
-/****** For netty Test ******/
+ /****** For netty Test ******/
 
 function netty_connection() {
     ws.onopen = function () {
         console.log("连接成功.")
     }
-    ws.onmessage = function (ev)  {
+    ws.onmessage = function (ev) {
         showMessage(ev.data);
     }
     ws.onclose = function () {
@@ -238,7 +210,7 @@ function showMessage(message) {
                                     <img class="comment_reply_img" src="${message}" style='width: 100px;height: 100px;' lay-on="test-tips-photos-one">
                                 </div>`;
         $('.reply_comment').append(element);
-    }else {
+    } else {
         const str = message.split(":");
         let element = `<div class="comment_item" id="${Math.random()}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span> ${str[1]}</div>`;
         $('.reply_comment').append(element);
@@ -312,21 +284,6 @@ function stopinputByMicrophone() {
 
 /** End for voice input **/
 
-//到这里loginUser的周期已经结束了,再写的一个
-function userInfoLoad() {
-    $.ajax({
-        type: 'GET',
-        url: baseUrl + '/fe-user/UserLoginController',
-        headers: {"token": localStorage.token},
-        data: {},
-        dataType: 'json',
-        success: function (res) {
-            let code = res.code;
-            console.log(res);
-            loginUser = res.data; // 将值赋给全局变量
-        }
-    })
-}
 
 //限制发送次数
 function handleClick() {

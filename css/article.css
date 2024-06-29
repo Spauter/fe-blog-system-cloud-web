@@ -358,6 +358,14 @@ li {
   color: #00B894;
 }
 
+.article_frame .article_comment .comment_list .comment_item  .comment_reply_img{
+  width: 100%;
+  max-width: 300px;
+  cursor: pointer;
+  color: #00B894;
+}
+
+
 /* E 文章页面 */
 .layui-laypage a,
 .layui-laypage span {
