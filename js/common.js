@@ -1,8 +1,25 @@
-var user = {};
-let token;
+
+//****************** 主配置 **************//
 const ws = new WebSocket('ws://192.168.0.228:8081/chat');
 const baseUrl = 'http://192.168.0.228:1868'
 const MINIO_BASE_URL = 'http://192.168.24.132:9000'
+//****************** END ***************//
+
+
+//登录用户
+var user = {};
+//token
+let token;
+//向服务器发送的数据
+const NETTY_JSON={
+    blogId: 0,
+    id: 0,
+    contentId: 0,
+    account: '',
+    type: '',
+    location: 'index.html',
+    content : '',
+}
 
 $(function () {
     /* 引入layui */
@@ -34,4 +51,21 @@ function isValidURL(url) {
         // 锚点
         '(\\#[-a-z\\d_]*)?$', 'i');
     return pattern.test(url)
+}
+
+//生成指定长度的随机字符串
+function generateRandomStringAndHex(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const hexCharacters = '0123456789abcdef';
+    const charactersLength = characters.length;
+    const hexCharactersLength = hexCharacters.length;
+    for (let i = 0; i < length; i++) {
+        if (i % 2 === 0) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        } else {
+            result += hexCharacters.charAt(Math.floor(Math.random() * hexCharactersLength));
+        }
+    }
+    return result;
 }

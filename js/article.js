@@ -1,4 +1,4 @@
-
+let blogId = window.location.href.split('=')[1];
 
 $(function () {
     if (user.account === undefined) {
@@ -11,7 +11,6 @@ $(function () {
 
 
 function load() {
-
     setTimeout(function () {
         $('.load_cover').animate({
             'top': '-100%'
@@ -24,7 +23,6 @@ function load() {
 }
 
 function content_load() {
-    let blogId = window.location.href.split('=')[1];
     $.ajax({
         type: 'GET',
         url: baseUrl + '/fe-blog/DetailBlogServlet',
@@ -55,8 +53,6 @@ function content_load() {
             console.log('请求出错');
         }
     })
-
-
 }
 
 
@@ -96,9 +92,9 @@ function commentAdd(blogId) {
                             icon: 2,
                             time: 2000
                         })
-                    })
+                    });
                 } else {
-                    addComment(data);
+                    console.log(" send_message(null)")
                 }
             }, error: function () {
                 layer.msg("提交失败，请稍后再试", {
@@ -107,31 +103,11 @@ function commentAdd(blogId) {
                 })
             }
         })
-        send_message()
+        //todo 待审核能工作后，将其放在 97行
+        send_message(null)
     })
 }
 
-function addComment(data) {
-    $.ajax({
-        type: 'POST',
-        url: baseUrl + '/fe-ornament/AddCommentServlet',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        success: function (res) {
-            console.log(res.msg);
-            layui.use('layer', function () {
-                layer.msg(res.msg, {
-                    icon: 6,
-                    time: 1000
-                })
-                if (res.code === 200) {
-                    $('#comment').val('');
-                }
-                findAllComment(data.blog_id);
-            })
-        }
-    })
-}
 
 /****** For netty Test ******/
 
@@ -150,17 +126,28 @@ function netty_connection() {
     }
 }
 
-function send_message() {
-    if (user == null) {
+function send_message(val) {
+    if (user.account === undefined) {
         layer.msg("请登录后再评论")
         return;
     }
+    const account=user.userId;
+    const location= window.location.href.split('/')[3];
+    const id=generateRandomStringAndHex(16)
+    NETTY_JSON.id=id
+    NETTY_JSON.account=account
     const content = $('#comment').val();
-    let element = `<li class="comment_item" id='comment_${Math.random()}'> <span>${user.account}：</span> ${content}
-                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${Math.random()}' lay-on="test-offset-r" onclick="reply()">回复</button>`
+    if (val === null) {
+        NETTY_JSON.content = content;
+    } else {
+        NETTY_JSON.content=val
+    }
+    NETTY_JSON.type='comment';
+    NETTY_JSON.location=location
+    ws.send(JSON.stringify(NETTY_JSON))
+    let element = `<li class="comment_item" id='comment_${id}'> <span>${user.account}：</span> ${content}
+                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${id}' lay-on="test-offset-r" onclick="reply()">回复</button>`
     $('.comment_list').append(element)
-    const message = user.account + ":" + content;
-    ws.send(message);
 }
 
 function showMessage(message) {

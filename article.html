@@ -117,11 +117,7 @@
     layui.use(function () {
         var upload = layui.upload;
         var layer = layui.layer;
-        var modal = document.getElementById("modal");
 
-        var modalImg = document.getElementById("modalImage");
-
-        var images = document.querySelectorAll(".comment_reply_img");
         // 渲染
         upload.render({
             elem: '#ID-upload-demo-size',
@@ -141,11 +137,10 @@
                     layer.msg("上传成功")
                     console.log(res.data)
                     const imgUrl = MINIO_BASE_URL + res.data.url;
-                    ws.send(imgUrl);
+                    send_message(imgUrl)
                     showMessage(imgUrl)
                 }
             }
-
         });
     })
 </script>

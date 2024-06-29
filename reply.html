@@ -83,13 +83,13 @@
 </div>
 <script>
     layui.use(function () {
-        var upload = layui.upload;
-        var layer = layui.layer;
-        var modal = document.getElementById("modal");
+        const upload = layui.upload;
+        const layer = layui.layer;
+        let modal = document.getElementById("modal");
 
-        var modalImg = document.getElementById("modalImage");
+        let modalImg = document.getElementById("modalImage");
 
-        var images = document.querySelectorAll(".comment_reply_img");
+        let images = document.querySelectorAll(".comment_reply_img");
         // 渲染
         upload.render({
             elem: '#ID-upload-demo-size',
