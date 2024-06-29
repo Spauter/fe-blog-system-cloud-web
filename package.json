@@ -1,0 +1,16 @@
+{
+  "name": "fe-blog",
+  "version": "1.0.0",
+  "description": "FE_BLOG前端",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "live-server ./ --port=8181 --host=localhost",
+    "dev": "node build.js --host 0.0.0.0–inline"
+  },
+  "author": "gu_jun_mo",
+  "license": "MulanPSL-2.0",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

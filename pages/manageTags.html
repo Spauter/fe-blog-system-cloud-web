@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="韬韬的个人博客">
+    <meta name="description" content="韬韬的个人博客-可定制的个人博客系统后台">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="ie-stand">
+    <title>韬韬的个人博客后台管理</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/aside.css">
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/backstage.css">
+    <link rel="stylesheet" href="../font/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <!-- S 侧边导航 -->
+    <div class="aside">
+        <div class="aside_menu ">
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd ><a href="userinfo.html">个人信息</a></dd>
+                        <dd ><a href="account.html">账户管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">博客管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="newblog.html">新建博客</a></dd>
+                        <dd><a href="manageblog.html">博客管理</a></dd>
+                        <dd><a href="auditBlog.html">博客审核</a></dd>
+                        <dd class="layui-this"><a href="manageTags.html">分类和标签</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">媒体管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="media.html">媒体库</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">个性化管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="manageindex.html">首页管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">审核管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="backendData.html">后台数据</a></dd>
+                    </dl>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!-- E 侧边导航 -->
+
+    <!-- S 导航区域 -->
+    <div class="nav">
+        <nav class="nav_content">
+            <div class="nav_title">
+                <h1>FE个人博客后台管理</h1>
+            </div>
+            <div class="nav_user">
+                <div class="user_avatar">
+                    <img src="../fe_blog/images/avatar/avatar.jpg" alt="头像">
+                </div>
+                <div class="user_cancel">
+                    <a href="javascript:;"><i class="fa fa-sign-out"></i>注销</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- E 导航区域 -->
+
+    <!-- S 内容区域 -->
+    <div class="content_container">
+        <div class="content_container_title">
+            <h2>分类管理</h2>
+        </div>
+        <div class="category_frame">
+            <form class="layui-form" id="field_add">
+                <div class="layui-form-item category_add">
+                    <label for="" class="layui-form-label">添加分类</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Field" class="layui-input" placeholder="输入你要添加的分类" required lay-verify="required">
+                    </div>
+                    <button type="submit" id="addfie" class="layui-btn add_btn" lay-submit>添加分类</button>
+                </div>
+            </form>
+            <form class="layui-form" id="delete_field">
+
+                <div class="layui-form-item">
+                    <label for="" class="layui-form-label">已有分类</label>
+                    <div class="layui-input-block  category_show" id="field_show">
+                        <div class="load_icon">
+                            <i class="layui-icon layui-icon-loading"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button type="submit" class="layui-btn del_btn" lay-submit>删除选中分类</button>
+                </div>
+            </form>
+        </div>
+        <div class="content_container_title">
+            <h2>标签管理</h2>
+        </div>
+        <div class="category_frame">
+            <form class="layui-form" id="tags_add">
+                <div class="layui-form-item category_add">
+                    <label class="layui-form-label">添加标签</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tag" class="layui-input" placeholder="输入你要添加的标签" required lay-verify='required'>
+                    </div>
+                    <button class="layui-btn add_btn" type="submit" lay-submit>添加标签</button>
+                </div>
+            </form>
+            <form  class="layui-form" id="delete_tags">
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">已有标签</label>
+                    <div class="layui-input-block  category_show" id="tags_show">
+                        <div class="load_icon">
+                            <i class="layui-icon layui-icon-loading"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button type="submit" class="layui-btn del_btn">删除选中标签</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <!-- E 内容区域 -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/verifyLoginUser.js"></script>
+    <script src="../js/getLoginUser.js"></script>
+    <script src="../js/layui/layui.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/pages/managetags.js"></script>
+    <script src="../js/pages/logout.js"></script>
+</body>
+
+</html>

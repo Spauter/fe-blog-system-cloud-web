@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="韬韬的个人博客后台">
+    <meta name="description" content="韬韬的个人博客-可定制的个人博客系统后台">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="ie-stand">
+    <title>韬韬的个人博客后台管理</title>
+    <link rel="stylesheet" href="../css/aside.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/backstage.css">
+    <link rel="stylesheet" href="../font/font-awesome-4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+<!-- S 侧边导航 -->
+<div class="aside">
+    <div class="aside_menu ">
+        <ul class="layui-nav layui-nav-tree">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">用户管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="userinfo.html">个人信息</a></dd>
+                    <dd class="layui-this"><a href="account.html">账户管理</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">博客管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="newblog.html">新建博客</a></dd>
+                    <dd><a href="manageblog.html">博客管理</a></dd>
+                    <dd><a href="auditBlog.html">博客审核</a></dd>
+                    <dd><a href="manageTags.html">分类和标签</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">媒体管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="media.html">媒体库</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">个性化管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="manageindex.html">首页管理</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">审核管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="backendData.html">后台数据</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- E 侧边导航 -->
+
+<!-- S 导航区域 -->
+<div class="nav">
+    <nav class="nav_content">
+        <div class="nav_title">
+            <h1>FE个人博客后台管理</h1>
+        </div>
+        <div class="nav_user">
+            <div class="user_avatar">
+                <img src="./avatar.jpg" alt="头像">
+            </div>
+            <div class="user_cancel">
+                <a href="javascript:;"><i class="fa fa-sign-out"></i>注销</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- E 导航区域 -->
+
+<!-- S 内容区域 -->
+<div class="content_container">
+    <div class="content_container_title">
+        <h2>账户管理</h2>
+    </div>
+    <div class="account_show">
+        <p>用户名：<span class="username_show">admin</span></p>
+        <p>密码：<span>**********</span></p>
+
+        <button class="layui-btn" id="pwd_change_btn">更改密码</button>
+
+
+    </div>
+</div>
+<!-- E 内容区域 -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/getLoginUser.js"></script>
+<script src="../js/layui/layui.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/pages/account.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/pages/logout.js"></script>
+</body>
+
+</html>

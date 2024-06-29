@@ -1,0 +1,443 @@
+@import "common2";
+
+
+@mixin frame_style{
+    height: 40rem;
+    padding: 2rem;
+    overflow-y: auto;
+    &::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+
+    }
+    &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 20px;
+        -webkit-box-shadow: inset 0 0 5px $d_color;
+        background: $d_color;
+    }
+    &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 0;
+        background: rgba(0,0,0,0.1);
+    }
+}
+/* S 个人信息页面 */
+.user_avatar_show{
+    padding: 3rem 4rem;
+    .user_avatar_frame{
+        width: 20rem;
+        height: 20rem;
+        overflow: hidden;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+    .user_avatar_push{
+        margin-top: 1rem;
+        width: 20rem;
+        i{
+            color: white;
+        }
+        p{
+            font-size: 1rem;
+            color: $gray;
+            padding: 1rem;
+        }
+    }
+    
+}
+
+
+.user_info_form{
+    width: 50rem;
+    margin-top: 3rem;
+    .layui-form{
+        .layui-form-item{
+            .layui-form-label{
+                color: $d_color;
+                
+            }
+            
+                
+            .save{
+                width: 10rem;
+                margin-top: 5rem;
+                margin-left: 11rem;
+                background: $s_color;
+            }
+        }
+    }
+}
+
+/* E 个人信息页面 */
+
+
+/* S 账户管理 */
+.account_show{
+    padding: 2rem;
+    p{
+        margin: 2rem 0rem;
+        color: $d_color;
+        span{
+            color: gray;
+        }
+    }
+    .pwd_change{
+        width: 45rem;
+        .layui-form-label{
+            color: $d_color;
+        }
+        
+        .change_btn{
+            margin-left: 11rem;
+        }
+    }
+}
+
+/* E 账户管理 */
+
+
+/* S 博客编辑 */
+
+.editor_blog{
+    margin-top: 3rem;
+    margin-bottom: 10rem;
+    .layui-form-item{
+        width: 80rem;
+        .layui-form-label{
+            color: $d_color;
+        }
+    }
+}
+
+.media_check_frame{
+    border: 1px solid $s_gray;
+    width: 40rem;
+    height: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .content_icon{
+        text-align: center;
+        i{
+            font-size: 4rem;
+        }
+    }
+    .content_text{
+        p{
+            color: $d_color;
+        }
+    }
+
+    
+}
+
+
+body .editormd-preview-close-btn{
+    display: none;
+}
+
+#editormd{
+    margin-top: 2rem;
+}
+
+.blog_btn{
+    width: 20rem;
+    margin-left: 2rem;
+}
+
+.media_layer_content{
+    @include frame_style;
+    .layer_content_frame{
+        width: 25rem;
+        height: 18rem;
+        display: inline-block;
+        border: 1px solid $s_gray;
+        margin: 1rem;
+        .media_layer_input{
+            display: none;
+        }
+        .img_frame{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+        .media_layer_input:checked ~ .img_frame{
+            box-shadow: 0px 0px 10px 2px $d_color;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+    }
+}
+.media_layer_btn{
+    display: flex;
+    justify-content: flex-end;
+    padding: 2rem;
+    border-top: 1px solid $s_gray;
+}
+/* S 博客编辑 */
+
+
+/* S 分类和标签 */
+
+.category_frame{
+    border: 1px solid $s_gray;
+    margin: 2rem;
+    width: 60rem;
+    height: 30rem;
+    padding: 2rem;
+    .category_add{
+        position: relative;
+        .add_btn{
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+    .category_show{
+        height: 20rem;
+        overflow: auto;
+    }
+    .del_btn{
+        float: right;
+        background-color: rgb(206, 78, 78);
+    }
+}
+.content_container{
+    margin-bottom: 10rem;
+}
+
+/* E 分类和标签 */
+
+
+/* S 媒体库 */
+
+
+
+.media_show{
+    margin: 4rem 1rem;
+    border: 1px solid $s_gray;
+    .media_show_title{
+        background-color: $s_color;
+        color: white;
+        padding: 1rem 2rem;
+    }
+    .media_show_content{
+        
+        padding: 1rem 1rem 0rem 1rem;
+        
+        .file_show{
+            padding-bottom: 0;
+            .picture_show{
+                @include frame_style;
+                .img_show_frame{
+                    width: 25rem;
+                    height: 18rem;
+                    display: inline-block;
+                    border: 1px solid $s_gray;
+                    margin: 1rem;
+                    .img_show_input{
+                        display: none;
+                    }
+                    .img_frame{
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                        transition: 0.2s;
+                    }
+                    .img_show_input:checked ~ .img_frame{
+                        box-shadow: 0px 0px 10px 2px $s_color;
+                        
+                    }
+                    .img_name{
+                        text-align: center;
+                        padding: 1rem 0rem;
+                    }
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                        object-position: center center;
+                    }
+                }
+            }
+            .music_show{
+                @include frame_style;
+                .music_show_list{
+                    padding: 1rem 0rem;
+                    border-bottom: 1px solid $s_gray;
+                }
+            }
+        }
+    }
+    .media_show_footer{
+        border-top: 1px solid $s_gray;
+        height: 5rem;
+        padding-right: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .del_btn{
+            background-color: rgb(206, 78, 78);
+        }
+    }
+}
+
+.drag_frame{
+    margin: 3rem;
+    .layui-upload-drag{
+        width: 30rem;
+        height: 15rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+#music_upload{
+    margin: 3rem;
+    i{
+        color: white;
+    }
+}
+/* E 媒体库 */
+
+
+
+/* S 首页管理 */
+.index_frame{
+    margin: 2rem;
+    border: 1px solid $s_color;
+    .index_frame_top{
+        padding: 2rem;
+        background: white;
+        h3{
+            color: $d_color;
+        }
+    }
+    .index_frame_content{
+        height: 50rem;
+        background: $s_color;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        h4{
+            font-size: 3rem;
+            color: white;
+        }
+        p{
+            margin-top: 2rem;
+            color: white;
+        }
+    }
+}
+
+.title_set{
+    width: 60rem;
+    margin-top: 10rem;
+    .layui-form-label{
+        color: $d_color;
+    }
+}
+
+
+/* E 首页管理 */
+
+
+/* S 博客管理 */
+.manageblog_frame{
+    margin: 2rem;
+    .manageblog_frame_top{
+        display: flex;
+        align-items: center;
+        .del_checked{
+            background-color: rgb(206, 78, 78);
+        }
+        .search_frame{
+            height: 100%;
+            width: 30rem;
+            margin-left: 20rem;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            border: 1px solid $s_gray;
+            position: relative;
+            label{
+                color: $d_color;
+            }
+            .search_frame_input{
+                width: 20rem;
+                outline: none;
+                border: none;
+                padding: 0rem 1rem;
+            }
+            .search_btn{
+                position: absolute;
+                right: 1rem;
+            }
+        }
+       
+    }
+    .manageblog_frame_content{
+        margin-top: 5rem;
+        thead{
+            tr{
+                background: $d_color;
+                th{
+                    color: white;
+                }
+            }
+        }
+        .layui-table-cell{
+            height: 3.5rem;
+        }
+    }
+}
+.media_check_frame{
+    overflow: hidden;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+
+
+/* E 博客管理 */
+
+
+/* S 加载圆圈 */
+.load_icon{
+    display: inline-block;
+    animation: rotate  linear 1s 0s infinite;
+    animation-delay:0s;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-left: -15%;
+    margin-top: -15%;
+    i{
+        font-size: 5rem;
+
+    }
+}
+@keyframes rotate {
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
+
+
+/* E 加载圆圈 */
+

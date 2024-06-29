@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="韬韬的个人博客">
+    <meta name="description" content="韬韬的个人博客-可定制的个人博客系统">
+    <meta name="author" content="AzriKxs,995586226@qq.com China">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="ie-stand">
+    <title>韬韬的个人博客</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="js/layui/css/layui.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <!-- S 导航栏 -->
+    <nav class="nav">
+        <div class="nav_content">
+            <div class="nav_content_title">
+                <h1><a href="index.html">FE小组博客</a></h1>
+            </div>
+            <div class="nav_content_search">
+                <!-- <div class="search_frame">
+                    <input type="text" placeholder="输入文章的标题进行搜索" name="" id="search_input">
+                    <a href=""><i class="fa fa-search"></i></a>
+                </div> -->
+            </div>
+            <div class="nav_content_menu">
+                <ul class="menu_frame">
+                    <li class="menu_checked"><a href="index.html"><i class="fa fa-home "></i>主页</a></li>
+                    <li><a href="category.html"><i class="fa fa-folder-open"></i> 分类</a></li>
+                    <li><a href="tags.html"><i class="fa fa-tags"></i>标签</a></li>
+                    <li> <a href="pages/newblog.html"><i class="fa fa-upload"></i>投稿</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- E 导航栏 -->
+
+
+    <!-- S 主体区域 -->
+    <div class="content">
+        <div class="container">
+            <div class="category_content">
+                <h2 class="category_content_title">分类</h2>
+                <div class="category_top">
+                    <div class="category_select_frame">
+                        <label>选择分类：</label>
+                        <select name="field" id="category_select" class="search_select">
+                    
+                        </select>
+                    </div>
+                    <div class="search_frame">
+                        <label>文章搜索</label>
+                        <div class="search_input_frame">
+                            <input type="text" class="search_input" placeholder="输入文章标题搜索">
+                            <a href="javascript:;" class="search_btn">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog_box_frame">
+                    <ul class="blog_box_list" id="content_list">
+                        
+                    </ul>
+                    <div id="laypage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- E 主体区域 -->
+    <footer class="page_footer"></footer>
+    <!-- E content -->
+    <div class="load_cover">
+        <i class="fa fa-spinner"></i>
+        <p>正在加载</p>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/layui/layui.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/category.js"></script>
+</body>
+
+</html>

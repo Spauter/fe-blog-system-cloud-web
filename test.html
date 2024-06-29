@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--    <script src="/js/chat.js"></script>-->
+</head>
+
+<body>
+<div id="chat">
+    <div class="sidebar">
+        <div class="m-card">
+            <header>
+                <span class="name" >姓名:</span>
+                <span class="name" id="username"></span>
+            </header>
+        </div>
+        <div class="m-list">
+            <ul id="user_list">
+            </ul>
+        </div>
+    </div>
+    <div class="main">
+        <div class="m-message">
+            <ul id="msg_list">
+            </ul>
+        </div>
+        <div class="m-text">
+            <textarea placeholder="按 Enter 发送" id="my_test"></textarea>
+            <!--            <div class="pager_btn">-->
+            <!--                <button id="send">发送</button>-->
+            <!--            </div>-->
+            <!--            <div class="arrow_box">-->
+            <!--                发送内容不能为空-->
+            <!--                <div class="arrow"></div>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+<script>
+
+
+    $(function () {
+        //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+        var username = "";
+        while (true) {
+            //弹出一个输入框，输入一段文字，可以提交
+            username = prompt("请输入您的名字", ""); //将输入的内容赋给变量 name ，
+            if (username.trim() === "")//如果返回的有内容
+            {
+                alert("名称不能输入空")
+            } else {
+                $("#username").text(username);
+                break;
+            }
+        }
+
+        const ws = new WebSocket("ws://localhost:8081/chat");
+        ws.onopen = function () {
+            console.log("连接成功.")
+        }
+        ws.onmessage = function (evt) {
+            showMessage(evt.data);
+        }
+        ws.onclose = function (){
+            console.log("连接关闭")
+        }
+
+        ws.onerror = function (){
+            console.log("连接异常")
+        }
+
+        function showMessage(message) {
+            // 张三:你好
+            var str = message.split(":");
+            $("#msg_list").append(`<li class="active"}>
+                                  <div class="main-others">
+                                    <img class="avatar" width="35" height="35" src="/img/user.jpg">
+                                    <div class="main-text">
+                                        <div class="user_name">${str[0]}</div>
+                                        <div class="text">${str[1]}</div>
+                                    </div>
+                                   </div>
+                              </li>`);
+            // 置底
+            setBottom();
+        }
+
+        $('#my_test').bind({
+            focus: function (event) {
+                event.stopPropagation()
+                $('#my_test').val('');
+                $('.arrow_box').hide()
+            },
+            keydown: function (event) {
+                event.stopPropagation()
+                if (event.keyCode === 13) {
+                    if ($('#my_test').val().trim() === '') {
+                        this.blur()
+                        $('.arrow_box').show()
+                        setTimeout(() => {
+                            this.focus()
+                        }, 1000)
+                    } else {
+                        $('.arrow_box').hide()
+                        //发送消息
+                        sendMsg();
+                        this.blur()
+                        setTimeout(() => {
+                            this.focus()
+                        })
+                    }
+                }
+            }
+        });
+        $('#send').on('click', function (event) {
+            event.stopPropagation()
+            if ($('#my_test').val().trim() === '') {
+                $('.arrow_box').show()
+            } else {
+                sendMsg();
+            }
+        })
+
+        function sendMsg() {
+            var message = $("#my_test").val();
+            $("#msg_list").append(`<li class="active"}>
+                                  <div class="main-self">
+                                      <span class="main-text">` + message + `</span>
+                                  </div>
+                              </li>`);
+            $("#my_test").val('');
+
+            //发送消息
+            message = username + ":" + message;
+            ws.send(message);
+            // 置底
+            setBottom();
+        }
+
+        // 置底
+        function setBottom() {
+            // 发送消息后滚动到底部
+            const container = $('.m-message')
+            const scroll = $('#msg_list')
+            container.animate({
+                scrollTop: scroll[0].scrollHeight - container[0].clientHeight + container.scrollTop() + 100
+            });
+        }
+
+        var textarea = document.querySelector('textarea');
+
+        textarea.addEventListener('input', (e) => {
+            textarea.style.height = '100px';
+            textarea.style.height = e.target.scrollHeight + 'px';
+        });
+
+    });
+
+</script>
+</body>
+
+</html>
+

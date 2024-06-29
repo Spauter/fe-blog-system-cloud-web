@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="韬韬的个人博客">
+    <meta name="description" content="韬韬的个人博客客-可定制的个人博客系统">
+    <meta name="author" content="AzriKxs,995586226@qq.com China">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="ie-stand">
+    <title>韬韬的个人博客-回复列表</title>
+    <link rel="stylesheet" href="js/layui/css/layui.css">
+    <link rel="stylesheet" href="css/reply.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="js/editor.md/css/editormd.preview.min.css">
+    <link rel="stylesheet" href="font/font-awesome-4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    添加垂直滚动条-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/layui/layui.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/reply.js"></script>
+</head>
+<body>
+<div class="nav">
+    <nav class="nav_content">
+        <div class="nav_user">
+            <div class="comment_avatar">
+                <img src="./avatar.png" alt="头像">
+            </div>
+        </div>
+        <div class="nav_title" id="comment_name">
+            <h2>某人的名字</h2>
+        </div>
+    </nav>
+    <nav class="nav_content">
+        <h3>这是评论这是品论这是萍论这是品论</h3>
+    </nav>
+</div>
+
+<div class="reply_comment" id="reply_body">
+    <div class="comment_item"><span style="color: #00B894;font-weight: bold;">充数内容</span> 充数内容</div>
+    <div class="comment_item"><span style="color: #00B894;font-weight: bold;">充数内容</span> 充数内容</div>
+    <div class="comment_item"><span style="color: #00B894;font-weight: bold;">充数内容</span> 充数内容</div>
+    <div class="comment_item"><span style="color: #00B894;font-weight: bold;">充数内容</span> 充数内容</div>
+    <div class="comment_item"><span style="color: #00B894;font-weight: bold;">充数内容</span> 充数内容</div>
+    <div class="comment_item"><span style="color: #00B894;font-weight: bold;">充数内容</span> 充数内容</div>
+</div>
+<div class="reply_page">
+    <div id="reply_page"></div>
+</div>
+<div class="bottom-fixed-container">
+    <h5 style="font-size: 2rem; color: #00B894;">回复</h5>
+    <div class="article_comment_frame">
+        <!-- 您的其他底部元素的内容 -->
+        <textarea class="textarea" name="comment_content" placeholder="在此处发表评论，请注意遵守道德与法律"
+                  required id="reply"></textarea>
+        <div class="comment-reply">
+            <div>
+                <i class="layui-icon layui-icon-mike" style="font-size: 2rem; color: #00B894;"
+                   onclick="responseByMicrophone()"></i>
+            </div>
+            <div>
+                <i class="layui-icon layui-icon-circle-dot" style="font-size: 2rem"
+                   onclick="stopinputByMicrophone()"></i>
+            </div>
+            <div>
+                <i class="layui-icon layui-icon-upload" style="font-size: 2rem" id="ID-upload-demo-size"></i>
+            </div>
+        </div>
+
+        <div class="reply_btn" onclick="auditResponse()">
+            点击回复
+        </div>
+    </div>
+</div>
+<div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+<script>
+    layui.use(function () {
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var modal = document.getElementById("modal");
+
+        var modalImg = document.getElementById("modalImage");
+
+        var images = document.querySelectorAll(".comment_reply_img");
+        // 渲染
+        upload.render({
+            elem: '#ID-upload-demo-size',
+            // 此处配置你自己的上传接口即可
+            url: `${baseUrl}` + '/fe-media/upload',
+            headers: {
+                "token": localStorage.token,
+                // "Content-Type": 'image/jpeg'
+            },
+            // 限制文件大小，单位 KB
+            size: 512,
+            accept: 'images',
+            done: function (res) {
+                if (res.code !== 200) {
+                    layer.msg("上传失败");
+                } else {
+                    layer.msg("上传成功")
+                    console.log(res.data)
+                    const imgUrl = MINIO_BASE_URL + res.data.url;
+                    ws.send(imgUrl);
+                    showMessage(imgUrl)
+                    modal = document.getElementById("modal");
+                    modalImg = document.getElementById("modalImage");
+                    images = document.querySelectorAll(".comment_reply_img");
+                    // 遍历为每个图片元素添加事件监听器
+                    images.forEach(function (image) {
+                        image.addEventListener("click", function () {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                        });
+                    });
+
+                    var span = document.querySelector(".close");
+
+                    span.addEventListener("click", function () {
+                        modal.style.display = "none";
+                    });
+
+                    modal.addEventListener("click", function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    });
+                }
+            }
+
+        });
+    })
+
+</script>
+</body>
+</html>

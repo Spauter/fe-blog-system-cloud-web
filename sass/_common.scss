@@ -1,0 +1,199 @@
+//网页基础样式与配色文件
+$d_color: #00B894;//深颜色
+$s_color: #55EFC4;//浅颜色
+$gray:#807C7C;//灰色
+$s_gray: #dfe6e9;
+$red:#d63031;
+
+//样式初始化
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: $d_color;
+}
+
+ol,ul,li{
+    list-style: none;
+}
+//设置版心
+.container{
+    width: 1380px;
+    margin: 0 auto;
+}
+.container_fluid{
+    width: 100%;
+}
+html{
+    font-size: 10px;
+}
+body{
+    min-width: 1380px;
+    min-height: 1000px;
+    background-color: #fff;
+    overflow: hidden;
+    &::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+
+    }
+    &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 20px;
+        -webkit-box-shadow: inset 0 0 5px $d_color;
+        background: $d_color;
+    }
+    &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 0;
+        background: rgba(0,0,0,0.1);
+    }
+}
+::selection{
+    background: $s_color;
+    color: white;
+}
+input{
+    outline: none;
+}
+i{
+    color: $d_color;
+}
+
+/* S 导航栏 */
+.nav{
+    min-width: 1380px;
+    transition: 0.5s;
+    box-shadow: 0px 5px 20px $s_gray;
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background: rgb(255, 255, 255);
+    .nav_content{
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .nav_content_title{
+            text-align: center;
+            h1{
+                font-size: 2.5rem;
+                padding-left: 4rem;
+                a{
+                    color: $d_color;
+                }
+            }
+        }
+        .nav_content_search{
+            .search_frame{
+                padding: 0.5rem 1rem;
+                border: 2px solid $s_color;
+                border-radius: 1.5rem;
+                width: 40rem;
+                #search_input{
+                    width: 35rem;
+                    border: none;
+                    padding: 0.5rem 1rem;
+                    
+                }
+                a{
+                    position: relative;
+                    left: 0.8rem;
+                    color: $d_color;
+                    i{
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+        .nav_content_menu{
+            .menu_frame{
+                display: flex;
+                justify-content: center;
+                li{
+                    margin: 0 2rem;
+                    font-size: 1.8rem;
+                    font-weight: 700;
+                    position: relative;
+                    overflow: hidden;
+                    height: 3rem;
+                    a{
+                        padding: 0.5rem 1rem;
+                        color: $s_color;
+                        i{
+                            color: $s_color;
+                            letter-spacing: 1rem;
+                        }
+                    }
+                    
+                }
+                li::after{
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 0.5rem;
+                    background-color: $s_color;
+                    bottom: 0;
+                    left: -100%;
+                    transition: 0.3s;
+                }
+                li:hover::after{
+                    left: 0;
+                }
+                
+            }
+        }
+    }
+}
+
+/* E 导航栏 */
+
+/*  S footer */
+.page_footer{
+    height: 10rem;
+    background: $s_color;
+
+    margin-top: 10rem;
+    
+}
+
+/*  E footer */
+
+
+.load_cover{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    background: $s_color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: 0.5s;
+    i{
+        color: white;
+        font-size: 5rem;
+        animation: rotate 1s 0s infinite;
+    }
+    p{
+        font-size: 2rem;
+        color: white;
+        margin-top: 2rem;
+        font-weight: 600;
+    }
+}
+
+@keyframes rotate {
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
+
+

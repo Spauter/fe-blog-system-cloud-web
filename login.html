@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="韬韬的个人博客">
+    <meta name="description" content="韬韬的个人博客-可定制的个人博客系统">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="ie-stand">
+    <title>韬韬的个人博客后台-登录</title>
+    <link rel="stylesheet" href="js/layui/css/layui.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+<!-- S nav -->
+<div class="nav">
+    <div class="nav_btn">
+        <a href="index.html"><i class="layui-icon layui-icon-return"></i>返回主页</a>
+    </div>
+    <div class="nav_title">
+        <h2>韬韬的个人博客系统——可定制的个性博客系统</h2>
+    </div>
+</div>
+<!-- E nav -->
+
+
+<!-- S nav -->
+<div class="content">
+    <div class="content_login">
+        <div class="login_title">
+            <h2>登入</h2>
+        </div>
+        <div class="login_form">
+            <form class="layui-form" id="load_form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label label_cl">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input input_bd" placeholder="请在此输入用户名" name="username" required="required" lay-verify="required" autocomplete="off">
+                        <!-- <p class="prompt">用户名为由数字，字母和下划线组成</p> -->
+                    </div>
+
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label label_cl">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" class="layui-input input_bd" placeholder="请在此输入密码" name="password" required="required" lay-verify="required">
+                        <!-- <p class="prompt">密码使用数字、字母、下划线‘_’、半角句号‘.’、减号‘-’组成</p> -->
+                    </div>
+                </div>
+                <div class="layui-form-item form-last">
+                    <div class="last_1">
+                        <label  class="layui-form-label label_cl">验证码</label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input input_bd" placeholder="输入右测验证码" name="vericode" required="required" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="last_2">
+
+                        <p>
+                            <canvas id="canvas" width="100" height="43"></canvas>
+                        </p>
+
+                    </div>
+                </div>
+                <div class="layui-form-item btn_sub">
+                    <button class="layui-btn layui-btn-fluid" type="submit" lay-submit >登入</button>
+                </div>
+                <a href="register.html">没有账号？注册一个</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- E nav -->
+<script src="js/jquery.min.js"></script>
+<script src="js/layui/layui.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+</body>
+
+</html>

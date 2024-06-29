@@ -1,0 +1,401 @@
+//网页基础样式与配色文件
+$d_color: #00B894; //深颜色
+$s_color: #55EFC4; //浅颜色
+$gray: #807C7C; //灰色
+$s_gray: #dfe6e9;
+$red: #d63031;
+
+/* S 导航栏 */
+
+//样式初始化
+
+
+//设置版心
+.container {
+  width: 1380px;
+  margin: 0 auto;
+}
+
+.container_fluid {
+  width: 100%;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 1380px;
+  min-height: 1000px;
+  background-color: #fff;
+  overflow: hidden;
+
+  &::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+
+  }
+
+  &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 20px;
+    -webkit-box-shadow: inset 0 0 5px $d_color;
+    background: $d_color;
+  }
+
+  &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+::selection {
+  background: $s_color;
+  color: white;
+}
+
+input {
+  outline: none;
+}
+
+i {
+  color: $d_color;
+}
+
+li {
+  list-style: none;
+}
+
+.nav {
+  min-width: 1380px;
+  box-shadow: 0px 2px 10px $s_color;
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background: #fff;
+
+  a {
+    text-decoration: none;
+  }
+
+  .nav_content {
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .nav_content_title {
+      text-align: center;
+
+      h1 {
+        font-size: 2.5rem;
+        padding-left: 4rem;
+        margin: 0;
+
+        a {
+          color: $d_color;
+        }
+      }
+    }
+
+    .nav_content_search {
+      .search_frame {
+        padding: 0.5rem 1rem;
+        border: 2px solid $s_color;
+        border-radius: 1.5rem;
+        width: 40rem;
+
+        #search_input {
+          width: 35rem;
+          border: none;
+          padding: 0.5rem 1rem;
+
+        }
+
+        a {
+          position: relative;
+          left: 0.8rem;
+          color: $d_color;
+
+          i {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+
+    .nav_content_menu {
+      .menu_frame {
+        display: flex;
+        justify-content: center;
+
+        li {
+          margin: 0 2rem;
+          font-size: 1.8rem;
+          font-weight: 700;
+          position: relative;
+          overflow: hidden;
+          height: 3rem;
+
+          a {
+            padding: 0.5rem 1rem;
+            color: $s_color;
+
+            i {
+              color: $s_color;
+              letter-spacing: 1rem;
+            }
+          }
+
+        }
+
+        li::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 0.5rem;
+          background-color: $s_color;
+          bottom: 0;
+          left: -100%;
+          transition: 0.3s;
+        }
+
+        li:hover::after {
+          left: 0;
+        }
+
+      }
+    }
+  }
+}
+
+/* E 导航栏 */
+
+/*  S footer */
+.page_footer {
+  height: 10rem;
+  background: $s_color;
+  margin-top: 10rem;
+}
+
+/*  E footer */
+
+
+@keyframes rotate {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.load_cover {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  background: $s_color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 0.5s;
+
+  .rotate {
+    display: inline-block;
+    animation: rotate 1s 0s infinite;
+  }
+
+  i {
+    color: white;
+    font-size: 5rem;
+
+  }
+
+  p {
+    font-size: 2rem;
+    color: white;
+    margin-top: 2rem;
+    font-weight: 600;
+  }
+}
+
+
+/* S 文章页面 */
+
+.article_frame {
+  margin-top: 12rem;
+  margin-bottom: 5rem;
+  padding: 4rem;
+
+  .article_title {
+    h2 {
+      font-size: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid $s_gray;
+      color: $d_color;
+    }
+  }
+
+  .article_info {
+    p {
+      color: $gray;
+      margin-top: 1rem;
+    }
+  }
+
+  .article_content {
+    padding: 4rem 8rem;
+    min-height: 60rem;
+
+    img {
+      display: block;
+      margin: 5rem auto;
+      max-width: 90rem;
+      box-shadow: 0px 0px 20px 2px rgb(71, 71, 71);
+    }
+
+    p {
+      text-indent: 2em;
+    }
+
+    pre {
+      border: none;
+      box-shadow: 0px 0px 10px rgb(165, 165, 165);
+      padding: 4rem;
+      background: #f1f2f6;
+      border-radius: 2rem;
+      transition: 0.5s;
+      margin: 3rem;
+
+      &:hover {
+        box-shadow: 0px 0px 10px rgb(122, 122, 122);
+      }
+    }
+
+    li {
+      padding: 0.25rem 0rem;
+      background: #f1f2f6;
+    }
+  }
+
+  .article_footer {
+
+    margin: 2rem;
+    margin-top: 6rem;
+    background: rgb(255, 255, 255);
+    border: 1px solid $d_color;
+    padding: 2rem 4rem;
+    box-shadow: 0px 0px 10px $s_gray;
+    border-radius: 1rem;
+
+    .article_footer_top {
+      font-size: 2.5rem;
+
+    }
+
+    .article_footer_info {
+      p {
+        margin: 1rem 0rem;
+        color: $d_color;
+
+        span {
+          color: $gray;
+        }
+      }
+    }
+
+  }
+
+  .article_comment {
+    margin: 2rem;
+    margin-top: 6rem;
+
+    h4 {
+      font-size: 2.5rem;
+      color: $d_color;
+    }
+
+    .article_comment_frame {
+      display: flex;
+      border: 1px solid $d_color;
+      border-radius: 1rem;
+      justify-content: center;
+
+      textarea {
+        flex: 1;
+        border-radius: 1rem;
+        outline: none;
+        border: 1px solid $d_color;
+        padding: 2rem;
+        font-size: 1.6rem;
+        border: none;
+        outline: none;
+      }
+
+
+      .comment_btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20rem;
+        height: 13rem;
+        background: $d_color;
+        font-size: 2rem;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
+
+    .comment_list {
+      padding-left: 0;
+      padding: 2rem;
+
+      .comment_item {
+        padding: 2rem;
+        margin-bottom: 3rem;
+        border-bottom: 1px solid $s_gray;
+        min-height: 6rem;
+        box-shadow: 0px 0px 10px $s_gray;
+
+        span {
+          color: $d_color;
+        }
+      }
+    }
+
+  }
+
+
+  /* E 文章页面 */
+}
+
+/* E 文章页面 */
+
+.layui-laypage a,
+.layui-laypage span {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  padding: 0 10px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  margin: 0 -1px 5px 0 !important;
+  background-color: white;
+  color: black;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+
+}
+
+.layui-laypage-curr {
+  background-color: $d_color !important;
+  color: white !important;
+}

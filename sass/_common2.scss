@@ -1,0 +1,36 @@
+//网页基础样式与配色文件
+$d_color: #009688;//深颜色
+$s_color: #00B894;//浅颜色
+$gray:#807C7C;//灰色
+$s_gray: #dfe6e9;
+$red:#d63031;
+
+//样式初始化
+*{
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+    color: $d_color;
+}
+
+ol,ul,li{
+    list-style: none;
+}
+
+html{
+    font-size: 10px;
+}
+
+body{
+    background-color: #fff;
+    overflow-x: auto;
+    min-width: 1500px;
+    overflow-y: scroll !important;
+}
+
+i{
+    color: $d_color;
+}
