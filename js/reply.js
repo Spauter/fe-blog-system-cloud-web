@@ -1,7 +1,7 @@
 let commentId = window.location.href.split('=')[1].split('_')[2];
 let clickCount = 0;
 let timeout;
-
+const id=generateRandomStringAndHex(16)
 
 $(function () {
     if (user.account===undefined) {
@@ -78,7 +78,7 @@ function auditResponse() {
                 })
             })
             // add(content)
-            send_message();
+            send_message(content);
         }
     })
 }
@@ -196,23 +196,37 @@ function netty_connection() {
     }
 }
 
-function send_message() {
+function send_message(val) {
+    if (user.account === undefined) {
+        layer.msg("请登录后再回复")
+        return;
+    }
+    const account=user.userId;
+    NETTY_JSON.id=id
+    NETTY_JSON.account=account
     const content = $('#reply').val();
-    let element = `<div class="comment_item"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span>${content}</div>`
-    $('.reply_comment').append(element)
-    const message = user.account + ":" + content;
-    ws.send(message);
+    if (val === null) {
+        NETTY_JSON.content = content;
+    } else {
+        NETTY_JSON.content=val
+    }
+    NETTY_JSON.type='reply';
+    ws.send(JSON.stringify(NETTY_JSON))
 }
 
-function showMessage(message) {
+function showMessage(ev) {
+    ev=JSON.parse(ev)
+    if (ev.location !== NETTY_JSON.location) {
+        return
+    }
+    const message=ev.content
     if (isValidURL(message)) {
-        const element = `<div class="comment_item" id="${Math.random()}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span>
+        const element = `<div class="comment_item" id="${id}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span>
                                     <img class="comment_reply_img" src="${message}" style='width: 100px;height: 100px;' lay-on="test-tips-photos-one">
                                 </div>`;
         $('.reply_comment').append(element);
     } else {
-        const str = message.split(":");
-        let element = `<div class="comment_item" id="${Math.random()}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span> ${str[1]}</div>`;
+        let element = `<div class="comment_item" id="${id}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span> ${message}</div>`;
         $('.reply_comment').append(element);
     }
     var modal = document.getElementById("modal");
@@ -287,7 +301,7 @@ function stopinputByMicrophone() {
 
 //限制发送次数
 function handleClick() {
-    if (clickCount > 3) {
+    if (clickCount > 2) {
         clearTimeout(timeout);
         return false
     } else {

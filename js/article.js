@@ -1,4 +1,5 @@
 let blogId = window.location.href.split('=')[1];
+const id=generateRandomStringAndHex(16)
 
 $(function () {
     if (user.account === undefined) {
@@ -6,6 +7,9 @@ $(function () {
     }
     content_load();
     netty_connection()
+    NETTY_JSON.location= window.location.href.split('/')[3];
+    NETTY_JSON.type='init';
+    ws.send(JSON.stringify(NETTY_JSON))
 })
 
 
@@ -133,10 +137,9 @@ function send_message(val) {
     }
     const account=user.userId;
     const location= window.location.href.split('/')[3];
-    const id=generateRandomStringAndHex(16)
     NETTY_JSON.id=id
     NETTY_JSON.account=account
-    const content = $('#comment').val();
+    let content = $('#comment').val();
     if (val === null) {
         NETTY_JSON.content = content;
     } else {
@@ -145,29 +148,31 @@ function send_message(val) {
     NETTY_JSON.type='comment';
     NETTY_JSON.location=location
     ws.send(JSON.stringify(NETTY_JSON))
-    let element = `<li class="comment_item" id='comment_${id}'> <span>${user.account}：</span> ${content}
-                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${id}' lay-on="test-offset-r" onclick="reply()">回复</button>`
-    $('.comment_list').append(element)
 }
 
-function showMessage(message) {
+function showMessage(ev) {
+    ev=JSON.parse(ev)
+    if (ev.location !== NETTY_JSON.location) {
+        return
+    }
+    const cid=ev.cid
+    const message=ev.content
     if (isValidURL(message)) {
-      let element=  `<div class="comment_item" id="${Math.random()}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span>
+      let element=  `<div class="comment_item" id="${cid}"> <span style="color: #00B894;font-weight: bold;">${user.account}：</span>
                                     <img class="comment_reply_img" src="${message}" style='width: 100px;height: 100px;' lay-on="test-tips-photos-one">
-                                    <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${Math.random()}' lay-on="test-offset-r" onclick="reply()">回复</button>
+                                    <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${ev.id}' lay-on="test-offset-r" onclick="reply()">回复</button>
                                 </div>`;
         $('.comment_list').append(element);
     } else {
-        const str = message.split(":");
-        const element = `<li class="comment_item" id='comment_${Math.random()}'> <span>${user.account}：</span> ${str}
-                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${Math.random()}' lay-on="test-offset-r" onclick="reply()">回复</button>`;
+        const element = `<li class="comment_item" id='comment_${cid}'> <span>${user.account}：</span> ${message}
+                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${ev.id}' lay-on="test-offset-r" onclick="reply()">回复</button>`;
         $('.comment_list').append(element);
     }
-    var modal = document.getElementById("modal");
+    const modal = document.getElementById("modal");
 
-    var modalImg = document.getElementById("modalImage");
+    const modalImg = document.getElementById("modalImage");
 
-    var images = document.querySelectorAll(".comment_reply_img");
+    const images = document.querySelectorAll(".comment_reply_img");
     images.forEach(function (image) {
         image.addEventListener("click", function () {
             modal.style.display = "block";

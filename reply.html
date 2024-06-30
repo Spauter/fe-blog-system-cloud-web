@@ -109,8 +109,7 @@
                     layer.msg("上传成功")
                     console.log(res.data)
                     const imgUrl = MINIO_BASE_URL + res.data.url;
-                    ws.send(imgUrl);
-                    showMessage(imgUrl)
+                  send_message(imgUrl)
                     modal = document.getElementById("modal");
                     modalImg = document.getElementById("modalImage");
                     images = document.querySelectorAll(".comment_reply_img");
