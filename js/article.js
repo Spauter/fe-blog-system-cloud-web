@@ -8,8 +8,6 @@ $(function () {
     content_load();
     netty_connection()
     NETTY_JSON.location= window.location.href.split('/')[3];
-    NETTY_JSON.type='init';
-    ws.send(JSON.stringify(NETTY_JSON))
 })
 
 
@@ -120,7 +118,8 @@ function netty_connection() {
         console.log("连接成功.")
     }
     ws.onmessage = function (ev) {
-        showMessage(ev.data);
+        const data =JSON.parse(ev.data)
+        showMessage(data);
     }
     ws.onclose = function () {
         console.log("连接关闭")
@@ -151,7 +150,6 @@ function send_message(val) {
 }
 
 function showMessage(ev) {
-    ev=JSON.parse(ev)
     if (ev.location !== NETTY_JSON.location) {
         return
     }
@@ -243,23 +241,19 @@ function findAllComment(blogId) {
             jump: function (obj, first) {
                 let curr = obj.curr;
                 $.ajax({
-                    type: 'GET',
-                    url: baseUrl + '/fe-ornament/SelectAllCommentServlet',
+                    type: 'POST',
+                    url: baseUrl + '/fe-chat/getByPage',
                     data: {
-                        'blog_id': blogId,
-                        'page': (curr - 1) * 20,
-                        'size': 20
+                        'location': NETTY_JSON.location,
+                        'pageNo': curr,
+                        'pageSize': 20
                     },
                     dataType: 'json',
                     success: function (res) {
-                        let data = res.data;
-                        let comment_list = [];
-                        for (let i = 0; i < data.length; i++) {
-                            let element = `<li class="comment_item" id='comment_${data[i]['id']}'> <span>${data[i]['account']}：</span> ${data[i]['content']}
-                                        <button type="button" class="layui-btn layui-btn-primary " id='reply_btn_${data[i]['id']}' lay-on="test-offset-r" onclick="reply()">回复</button>`
-                            comment_list.push(element);
+                        $('.comment_list').empty();
+                        for (let i = 0; i < res.length; i++) {
+                            showMessage(res[i])
                         }
-                        $('.comment_list').empty().append(comment_list.join(''));
                     }
                 })
             }

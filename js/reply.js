@@ -2,11 +2,13 @@ let commentId = window.location.href.split('=')[1].split('_')[2];
 let clickCount = 0;
 let timeout;
 const id=generateRandomStringAndHex(16)
+const replyLocation= window.location.href.split('=')[3]
 
 $(function () {
     if (user.account===undefined) {
         load_user();
     }
+    NETTY_JSON.location=replyLocation;
     reply_content_load()
     netty_connection();
 })
@@ -84,32 +86,7 @@ function auditResponse() {
 }
 
 function add(content) {
-    $.ajax({
-        type: 'POST',
-        url: baseUrl + '/fe-ornament/addResponse',
-        data: {
-            'content': content,
-            'cid': commentId,
-        },
-        dataType: 'json',
-        success: function (res) {
-            layer.msg(res.msg, {
-                iron: 6,
-                time: 1000,
-            })
-            $('#reply').text("");
-            reply_content_load();
-        },
-        error: function () {
-            layui.use('layer', function () {
-                let layer = layui.layer;
-                layer.msg("未知错误,请稍后再试", {
-                    icon: 2,
-                    time: 2000
-                })
-            })
-        }
-    })
+
 }
 
 
@@ -124,37 +101,29 @@ function reply_content_load() {
             jump: function (obj, first) {
                 let curr = obj.curr;
                 $.ajax({
-                    type: 'GET',
-                    url: baseUrl + '/fe-ornament/findResponseByCommentId',
+                    type: 'POST',
+                    url: baseUrl + '/fe-chat/getByPage',
                     data: {
-                        'cid': commentId,
-                        'page': (curr - 1) * 10,
-                        'size': 10
+                        'location': NETTY_JSON.location,
+                        'pageNo': curr,
+                        'pageSize': 12
                     },
-                    dataType: "json",
+                    dataType: 'json',
                     success: function (res) {
-                        if (res.code !== 200) {
-                            layui.use('layer', function () {
-                                let layer = layui.layer;
-                                layer.msg(res.msg, {
-                                    icon: 6,
-                                    time: 2000
-                                })
-                            })
-                            $('.reply_comment').empty();
+                        $('.reply_comment').empty();
+                        if (res.length === 0) {
                             return;
                         }
-                        let data = res.data;
-                        let reply_list = [];
-                        for (let i = 0; i < data.length; i++) {
-                            let element = `<div class="comment_item" id='reply_${data[i]['rid']}'> <span style="color: #00B894;font-weight: bold;">${data[i]['account']}：</span> ${data[i]['content']}</div>`
-                            reply_list.push(element);
+                        if (res.msg !== undefined) {
+                            layer.msg("加载失败");
                         }
-                        $('.reply_comment').empty().append(reply_list.join(''));
-                    }, error: function (err) {
-                        layer.msg("请求出错，即将返回首页");
-                        console.error(err)
-                    }
+                        for (let i = 0; i < res.length; i++) {
+                            showMessage(res[i]);
+                        }
+                    },
+                    error(err) {
+                        layer.msg("加载失败")
+                    },
                 });
             }
         })
@@ -186,7 +155,8 @@ function netty_connection() {
         console.log("连接成功.")
     }
     ws.onmessage = function (ev) {
-        showMessage(ev.data);
+        const data=JSON.parse(ev.data)
+        showMessage(data);
     }
     ws.onclose = function () {
         console.log("连接关闭")
@@ -215,7 +185,7 @@ function send_message(val) {
 }
 
 function showMessage(ev) {
-    ev=JSON.parse(ev)
+
     if (ev.location !== NETTY_JSON.location) {
         return
     }
