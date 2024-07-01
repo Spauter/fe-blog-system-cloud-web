@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "live-server ./ --port=8181 --host=localhost",
-    "dev": "node build.js --host 0.0.0.0–inline"
+    "dev": "node build.js --host"
   },
   "author": "gu_jun_mo",
   "license": "MulanPSL-2.0",

@@ -1,7 +1,7 @@
 
 //****************** 主配置 **************//
-const ws = new WebSocket('ws://192.168.0.228:8081/chat');
-const baseUrl = 'http://192.168.0.228:1868'
+const ws = new WebSocket('ws://192.168.1.48:8081/chat');
+const baseUrl = 'http://192.168.1.48:1868'
 const MINIO_BASE_URL = 'http://192.168.24.132:9000'
 //****************** END ***************//
 

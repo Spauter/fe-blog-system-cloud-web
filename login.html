@@ -36,7 +36,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label label_cl">用户名</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input input_bd" placeholder="请在此输入用户名" name="username" required="required" lay-verify="required" autocomplete="off">
+                        <input type="text" class="layui-input input_bd" placeholder="请在此输入用户名" name="username"
+                               required="required" lay-verify="required" autocomplete="off">
                         <!-- <p class="prompt">用户名为由数字，字母和下划线组成</p> -->
                     </div>
 
@@ -44,15 +45,17 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label label_cl">密码</label>
                     <div class="layui-input-block">
-                        <input type="password" class="layui-input input_bd" placeholder="请在此输入密码" name="password" required="required" lay-verify="required">
+                        <input type="password" class="layui-input input_bd" placeholder="请在此输入密码" name="password"
+                               required="required" lay-verify="required">
                         <!-- <p class="prompt">密码使用数字、字母、下划线‘_’、半角句号‘.’、减号‘-’组成</p> -->
                     </div>
                 </div>
                 <div class="layui-form-item form-last">
                     <div class="last_1">
-                        <label  class="layui-form-label label_cl">验证码</label>
+                        <label class="layui-form-label label_cl">验证码</label>
                         <div class="layui-input-block">
-                            <input type="text" class="layui-input input_bd" placeholder="输入右测验证码" name="vericode" required="required" lay-verify="required">
+                            <input type="text" class="layui-input input_bd" placeholder="输入右测验证码" name="vericode"
+                                   required="required" lay-verify="required">
                         </div>
                     </div>
                     <div class="last_2">
@@ -64,9 +67,12 @@
                     </div>
                 </div>
                 <div class="layui-form-item btn_sub">
-                    <button class="layui-btn layui-btn-fluid" type="submit" lay-submit >登入</button>
+                    <button class="layui-btn layui-btn-fluid" type="submit" lay-submit>登入</button>
                 </div>
                 <a href="register.html">没有账号？注册一个</a>
+                <button type="button" class="layui-btn layui-btn-primary" lay-on="test-page-custom">
+                    <span class="layui-badge-dot"></span> 弹出任意自定义内容
+                </button>
             </form>
         </div>
     </div>
@@ -77,6 +83,26 @@
 <script src="js/layui/layui.js"></script>
 <script src="js/common.js"></script>
 <script src="js/login.js"></script>
+<script>
+    layui.use(function () {
+        var layer = layui.layer;
+        var util = layui.util;
+        var form = layui.form;
+        // 事件
+        util.on('lay-on', {
+            'test-page-custom': function () {
+                layer.open({
+                    type: 2,
+                    title: '请扫描下面二维码,并且随意选择一种轮询模式',
+                    shadeClose: true,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['900px', '600px'],
+                    content: 'http://192.168.43.68:9999/'
+                });
+            }
+        })
+    });
+</script>
 </body>
 
 </html>
